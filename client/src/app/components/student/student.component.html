@@ -1,0 +1,103 @@
+<div class="container clearfix">
+<div class="logout">
+  <button (click)="logout()">Logout</button>
+</div>
+  <h2>Students</h2>
+  <br> Search student by first name : <input type="text" id="search" [(ngModel)]="filteredBy">
+  <br><br> filtered Student : {{filteredBy}}
+
+  <br><br>
+
+  <div class="table">
+    <table id="students">
+      <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Course</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let student of students | studentFilter : filteredBy">
+        <td>{{student.firstName}}</td>
+        <td>{{student.lastName}}</td>
+        <td>{{student.email}}</td>
+        <td>{{student.address.street}} , {{student.address.state}}</td>
+        <td>{{student.course.name}}</td>
+        <td><a (click)="showEditStudent(student)">Edit</a>&nbsp;&nbsp;<a (click)="deleteStudent(student.id)">Delete</a></td>
+      </tr>
+    </table>
+    <br>
+    <button (click)="showAddStudentForm()" *ngIf="!doEditStudent">Add Student</button>
+  </div>
+  <div class="updateForm">
+    <div *ngIf="doEditStudent && !showAddStudent">
+      <h2>Edit Student</h2>
+
+        <form (submit)="editStudent(student)" ngNativeValidate>
+
+        <br>
+		 <input type="hidden" name="id" [(ngModel)]="student.id">
+        <label>First Name</label>
+        <input type="text" name="firstName" required minlength="2" [(ngModel)]="student.firstName">
+        <br><br>
+        <label>Last Name</label><br>
+        <input type="text" name="lastName" required minlength="2" [(ngModel)]="student.lastName">
+        <br><br>
+        <label>Email</label><br>
+        <input type="email" name="email" [(ngModel)]="student.email">
+        <br><br>
+        <label>Street</label><br>
+        <input type="text" name="street" required minlength="2" [(ngModel)]="student.address.street">
+        <br><br>
+        <label>State</label><br>
+        <input type="text" name="state" required minlength="2" [(ngModel)]="student.address.state">
+        <br><br>
+        <label>Zip Code</label><br>
+        <input type="number" name="zipCode" required minlength="2" [(ngModel)]="student.address.zipCode">
+        <br><br>
+        <label>Course ID</label><br>
+        <input type="number" name="course" required [(ngModel)]="student.course.id">
+        <br><br>
+        <input type="submit" value="Update Student">
+
+
+      </form>
+
+    </div>
+
+    <br><br>
+  </div>
+  <br><br>
+
+  <div *ngIf="showAddStudent" class="addForm">
+    <form (submit)="addStudent(student)" ngNativeValidate>
+      <br>
+      <label>First Name</label><br>
+      <input type="text" name="firstName" required minlength="2" [(ngModel)]="student.firstName">
+      <br><br>
+      <label>Last Name</label><br>
+      <input type="text" name="lastName" required minlength="2" [(ngModel)]="student.lastName">
+      <br><br>
+      <label>Email</label><br>
+      <input type="email" name="email" [(ngModel)]="student.email">
+      <br><br>
+      <label>Street</label><br>
+      <input type="text" name="street" required minlength="2" [(ngModel)]="student.address.street">
+      <br><br>
+      <label>State</label><br>
+      <input type="text" name="state" required minlength="2" [(ngModel)]="student.address.state">
+      <br><br>
+      <label>Zip Code</label><br>
+      <input type="number" name="zipCode" required minlength="2" [(ngModel)]="student.address.zipCode">
+      <br><br>
+      <label>Course ID</label><br>
+      <input type="number" name="course" required [(ngModel)]="student.course.id">
+      <br><br>
+      <input type="submit" value="Add Student">
+
+
+    </form>
+  </div>
+</div>
+
